@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agro Recommender — Home</title>
+    <link id="theme-mobile" rel="stylesheet" href="/src/styles.css" />
+    <link
+      id="theme-desktop"
+      rel="stylesheet"
+      href="/src/styles-desktop-first.css"
+      disabled
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="/index.html" class="logo">Agro<span>Rec</span></a>
+        <nav>
+          <a href="/index.html" aria-current="page">Home</a>
+          <a href="/crops.html">Culturas</a>
+          <a href="/recommend.html">Recomendar</a>
+        </nav>
+        <button id="toggle-css" class="btn">Mobile-first</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Seção fullscreen 100vh -->
+      <section class="hero fullscreen">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <h1>Recomende culturas com precisão</h1>
+            <p>
+              Consuma a API do exercício 1 e descubra a cultura ideal para sua
+              <strong>temperatura</strong>, <strong>umidade</strong> e
+              <strong>tipo de solo</strong>.
+            </p>
+            <a class="btn primary" href="/recommend.html">Começar</a>
+          </div>
+
+          <div class="hero-image">
+            <img
+              class="img-fluid"
+              src="/public/placeholder.jpg"
+              alt="Plantação ao amanhecer"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="features">
+        <div class="container grid-3">
+          <article class="card">
+            <h3>Rápido</h3>
+            <p>Resposta imediata usando um modelo explicável.</p>
+          </article>
+          <article class="card">
+            <h3>Confiável</h3>
+            <p>Regras claras para temperatura, umidade e solo.</p>
+          </article>
+          <article class="card">
+            <h3>Integração</h3>
+            <p>API REST com documentação em Swagger.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container">
+          <h2>Pronto para testar?</h2>
+          <a class="btn" href="/crops.html">Ver culturas suportadas</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>&copy; 2025 AgroRec. Todos os direitos reservados.</small>
+        <span id="api-status" class="status">verificando API…</span>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>

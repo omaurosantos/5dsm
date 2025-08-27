@@ -1,0 +1,17 @@
+@import url("./styles.css");
+/* Nota: para simplificar o exercício visual, herdamos variáveis/cores de styles.css
+e apenas substituímos o comportamento da grid para simular desktop-first. */
+
+/* Base (desktop) */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* Quebra para mobile */
+@media (max-width: 767px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

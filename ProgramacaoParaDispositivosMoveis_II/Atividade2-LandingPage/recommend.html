@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agro Recommender — Recomendar</title>
+    <link id="theme-mobile" rel="stylesheet" href="/src/styles.css" />
+    <link
+      id="theme-desktop"
+      rel="stylesheet"
+      href="/src/styles-desktop-first.css"
+      disabled
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="/index.html" class="logo">Agro<span>Rec</span></a>
+        <nav>
+          <a href="/index.html">Home</a>
+          <a href="/crops.html">Culturas</a>
+          <a href="/recommend.html" aria-current="page">Recomendar</a>
+        </nav>
+        <button id="toggle-css" class="btn">Mobile-first</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container">
+          <h1 class="page-title">Descobrir cultura ideal</h1>
+
+          <form id="rec-form" class="form">
+            <div class="field">
+              <label for="temperatura">Temperatura (°C)</label>
+              <input
+                id="temperatura"
+                type="number"
+                name="temperatura"
+                required
+                value="24"
+              />
+            </div>
+
+            <div class="field">
+              <label for="umidade">Umidade (%)</label>
+              <input
+                id="umidade"
+                type="number"
+                name="umidade"
+                required
+                min="0"
+                max="100"
+                value="60"
+              />
+            </div>
+
+            <div class="field">
+              <label for="tipoSolo">Tipo de solo</label>
+              <select id="tipoSolo" name="tipoSolo">
+                <option>franco</option>
+                <option>argiloso</option>
+                <option>arenoso</option>
+                <option>siltoso</option>
+                <option>turfoso</option>
+                <option>calcario</option>
+              </select>
+            </div>
+
+            <button class="btn primary" type="submit">Recomendar</button>
+          </form>
+
+          <div id="result" class="result" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>&copy; 2025 AgroRec</small>
+        <span id="api-status" class="status">verificando API…</span>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/recommend.ts"></script>
+  </body>
+</html>

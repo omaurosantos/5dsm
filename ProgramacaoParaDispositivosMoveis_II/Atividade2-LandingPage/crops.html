@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agro Recommender — Culturas</title>
+    <link id="theme-mobile" rel="stylesheet" href="/src/styles.css" />
+    <link
+      id="theme-desktop"
+      rel="stylesheet"
+      href="/src/styles-desktop-first.css"
+      disabled
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="/index.html" class="logo">Agro<span>Rec</span></a>
+        <nav>
+          <a href="/index.html">Home</a>
+          <a href="/crops.html" aria-current="page">Culturas</a>
+          <a href="/recommend.html">Recomendar</a>
+        </nav>
+        <button id="toggle-css" class="btn">Mobile-first</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container">
+          <h1 class="page-title">Culturas suportadas</h1>
+          <div id="crops" class="grid-3"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>&copy; 2025 AgroRec</small>
+        <span id="api-status" class="status">verificando API…</span>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/crops.ts"></script>
+  </body>
+</html>
