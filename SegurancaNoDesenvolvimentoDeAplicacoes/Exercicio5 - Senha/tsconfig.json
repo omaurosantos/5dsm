@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es6",                     /* Especifica a versão do ECMAScript de destino */
+    "module": "commonjs",                /* Especifica a geração de módulo */
+    "outDir": "./dist",                  /* Redireciona a estrutura de saída para o diretório */
+    "rootDir": "./",                     /* Especifica o diretório raiz dos arquivos de entrada */
+    "strict": true,                      /* Habilita todas as opções de verificação de tipo estritas */
+    "esModuleInterop": true,             /* Permite interoperabilidade com módulos CommonJS */
+    "skipLibCheck": true,                /* Pula a verificação de tipo de todos os arquivos de declaração */
+    "forceConsistentCasingInFileNames": true
+  }
+}

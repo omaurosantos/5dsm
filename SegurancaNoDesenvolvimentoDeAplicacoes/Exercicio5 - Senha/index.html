@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Verdana, Arial, sans-serif;
+            background-color: #FFFFFF;
+            height: 100%;
+        }
+        .header {
+            background-color: #A3130D;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+        }
+        .logo img {
+            height: 28px;
+        }
+        .main-container {
+            width: 100%;
+            padding-top: 80px;
+            display: flex;
+        }
+        .content-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding-left: 150px; 
+        }
+        .form-section {
+            flex-grow: 1;
+            max-width: 450px;
+        }
+        .login-form {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 15px;
+            align-items: center;
+        }
+        .login-form label {
+            font-size: 14px;
+            color: #5b7a9a; 
+            text-align: left;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            font-family: Verdana, sans-serif;
+            font-size: 12px;
+            color: black;
+            height: 30px;
+            width: 250px; 
+            padding: 3px;
+            border: 1px solid Gainsboro;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .form-row-full {
+            grid-column: 2;
+            padding-top: 5px;
+        }
+        .login-form button {
+            background-color: #F0F0F0;
+            border: 1px solid #7F9DB9;
+            color: #000;
+            padding: 6px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        .login-form button:hover {
+            background-color: #E0E0E0;
+        }
+        .solutions-link {
+            color: #0000CD;
+            text-decoration: none;
+            font-size: 13px;
+            display: block;
+            margin-top: 20px;
+        }
+        .solutions-link:hover {
+            text-decoration: underline;
+        }
+        .attempts-section {
+            border: 1px solid #D3D3D3;
+            padding: 10px;
+            text-align: center;
+            width: 80px;
+            margin-left: 50px;
+        }
+        .attempts-number {
+            font-family: 'Calibri', sans-serif;
+            font-size: 53px;
+            color: #4169E1;
+            line-height: 1;
+        }
+        .attempts-text {
+            font-family: 'Calibri', sans-serif;
+            font-size: 12px;
+            color: #4169E1;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="https://siga.cps.sp.gov.br/fatec/Resources/CPS_LogotipoMinimoNegativo.png" alt="Logo CPS">
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="content-wrapper">
+            <div class="form-section">
+                <form class="login-form" action="/login" method="POST">
+                    
+                    <label for="usuario">Usuário</label>
+                    <input 
+                        type="text" 
+                        id="usuario" 
+                        name="usuario" 
+                        required
+                        title="usuario"
+                        maxlength="20"
+                        onblur="this.value=this.value();">
+                    
+                    <label for="senha">Senha</label>
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        name="senha" 
+                        required
+                        title="senha"
+                        maxlength="32">
+
+                    <div class="form-row-full">
+                        <button type="submit">Entrar</button>
+                    </div>
+
+                    <div class="form-row-full">
+                        <a href="#" class="solutions-link">Soluções para problemas no Acesso</a>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="attempts-section">
+                <div class="attempts-number">5</div>
+                <div class="attempts-text">tentativas</div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>

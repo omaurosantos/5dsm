@@ -1,0 +1,10 @@
+### Bibliotecas Necessárias
+Certifique-se de que as seguintes bibliotecas estão instaladas:
+1. numpy
+2. matplotlib
+3. scikit-learn
+
+### Comandos para Instalar as Bibliotecas
+Abra o terminal e execute os seguintes comandos:
+```bash
+pip install numpy matplotlib scikit-learn
