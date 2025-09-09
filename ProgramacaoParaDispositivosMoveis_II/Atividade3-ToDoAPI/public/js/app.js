@@ -1,4 +1,4 @@
-const API_URL = (localStorage.getItem('API_URL') || 'http://localhost:3000/api').replace(/\/$/, '');
+const API_URL = (localStorage.getItem('API_URL') || '/api').replace(/\/$/, '');
 
 const els = {
   list: document.getElementById('taskList'),

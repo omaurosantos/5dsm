@@ -1,0 +1,62 @@
+:root {
+  --space: 1rem;
+  --brand: #6f42c1;
+  --hero-shadow: 0 20px 50px rgba(0,0,0,.15);
+}
+
+/* Deslocamento para âncoras com header fixo */
+:target::before {
+  content: "";
+  display: block;
+  height: 4rem;
+  margin-top: -4rem;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+  line-height: 1.55;
+  scroll-behavior: smooth;
+  padding-top: 4rem; /* evita que o header fixe sobreponha o topo ao carregar */
+}
+
+/* Hero 100vh */
+.hero-section {
+  min-height: 100vh; /* fullscreen */
+  padding-top: 6rem; /* espaço p/ header fixo */
+  padding-bottom: 3rem;
+  background: linear-gradient(180deg, #fff, #f7f7ff);
+}
+
+.shadow-hero { box-shadow: var(--hero-shadow); }
+
+.section-title {
+  /* tipografia escalável usando rem e vw */
+  font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+}
+
+.brand { color: var(--brand); }
+
+.feature .card-title { font-size: 1.25rem; }
+
+.cta-section {
+  min-height: 100vh; /* fullscreen */
+  background: radial-gradient(1200px 600px at 50% 0%, #f0e9ff 0, #fff 60%);
+}
+
+/* -------- Mobile-first (padrão) ---------- */
+/* Começa simples no mobile; melhora acima de 768px */
+.columns .card { border-radius: 1rem; }
+@media (min-width: 768px) {
+  .feature .card-body { padding: 2rem; }
+}
+
+/* -------- Desktop-first (alternativo) ---------- */
+/* Quando a classe desktop-first está no body, aplicamos grid 3 colunas e degradamos no mobile */
+body.desktop-first .columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+body.desktop-first .columns > * { display: block; }
+@media (max-width: 767.98px) {
+  body.desktop-first .columns { grid-template-columns: 1fr; }
+}
+
+/* Footer */
+footer { background: #fff; }

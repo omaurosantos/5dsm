@@ -13,10 +13,16 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+import passport from 'passport';
+import { usePassport } from './auth.js';
+app.use(usePassport);
+
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+import authRoutes from './authRoutes.js';
+app.use('/auth', authRoutes);
 app.use('/api', routes);
 
 const openapiDoc = loadOpenApi();

@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: API de Tarefas (To-Do)
+  version: "1.0.0"
+  description: |
+    CRUD básico para treinar rotas REST e persistência simples em arquivo JSON.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/tasks:
+    get:
+      summary: Lista todas as tarefas
+      tags: [Tasks]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+    post:
+      summary: Cria uma nova tarefa
+      tags: [Tasks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTask'
+      responses:
+        '201':
+          description: Criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Erro de validação
+  /api/tasks/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtém uma tarefa
+      tags: [Tasks]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Não encontrada
+    put:
+      summary: Atualiza (merge) uma tarefa
+      tags: [Tasks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTask'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Erro de validação
+        '404':
+          description: Não encontrada
+    delete:
+      summary: Remove uma tarefa
+      tags: [Tasks]
+      responses:
+        '204':
+          description: Sem conteúdo
+        '404':
+          description: Não encontrada
+components:
+  schemas:
+    Status:
+      type: string
+      enum: [pending, done]
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Criar API To-Do
+        description:
+          type: string
+          example: Implementar CRUD com JSON e Swagger
+        status:
+          $ref: '#/components/schemas/Status'
+      required: [id, title, status]
+    CreateTask:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+      required: [title]
+    UpdateTask:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+      additionalProperties: false

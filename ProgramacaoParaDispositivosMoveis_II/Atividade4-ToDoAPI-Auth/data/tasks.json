@@ -1,5 +1,5 @@
 {
-  "lastId": 5,
+  "lastId": 4,
   "tasks": [
     {
       "id": 1,
@@ -21,11 +21,6 @@
     {
       "id": 4,
       "title": "Tarefa 2 | Mauro",
-      "status": "pending"
-    },
-    {
-      "id": 5,
-      "title": "Tarefa 3 - Teste",
       "status": "pending"
     }
   ]

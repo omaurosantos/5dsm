@@ -1,5 +1,5 @@
 {
-  "name": "todo-api-ts",
+  "name": "atividade4-todoapi-auth",
   "version": "1.0.0",
   "description": "API de Tarefas (To-Do) com TypeScript, Express, persistência em JSON e documentação Swagger.",
   "main": "dist/server.js",
@@ -11,22 +11,30 @@
     "lint": "eslint src --ext .ts"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "swagger-ui-express": "^5.0.1",
     "yaml": "^2.5.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.12.12",
-    "eslint": "^9.9.0",
+    "@types/passport-jwt": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^8.0.1",
+    "eslint": "^9.9.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.15.7",
     "typescript": "^5.5.4"

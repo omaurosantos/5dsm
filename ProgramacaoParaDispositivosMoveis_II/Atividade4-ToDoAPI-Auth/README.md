@@ -76,3 +76,20 @@ Após iniciar, acesse:
 ### Observações
 - CORS permanece habilitado por padrão. Quando a LP é servida pelo mesmo domínio, CORS não é necessário, mas deixamos ativo para facilitar testes locais.
 - Se desejar rodar LP e API separados, basta mover `public/` para outro projeto e configurar um `proxy` no dev server do front.
+
+
+## Autenticação (Passport.js + JWT)
+- Login: `POST /auth/login` com JSON `{ "username": "admin", "password": "admin123" }`
+- Resposta: `{ token, user }`
+- Use o token como `Authorization: Bearer <token>`
+- `POST/PUT/DELETE /api/...` exigem token; `GET` permanece público.
+- Para trocar a senha/usuário, edite `data/users.json` (hash gerado com bcrypt) e defina `JWT_SECRET` no `.env`.
+
+Exemplos:
+```bash
+# Login
+curl -X POST http://localhost:3000/auth/login -H "Content-Type: application/json" -d "{"username":"admin","password":"admin123"}"
+
+# Chamar rota protegida criando tarefa
+curl -X POST http://localhost:3000/api/tasks -H "Authorization: Bearer TOKEN_AQUI" -H "Content-Type: application/json" -d "{"title":"Nova","description":"Teste"}"
+```
