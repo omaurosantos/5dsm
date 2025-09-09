@@ -12,8 +12,8 @@ backend/dist/
 **/dist/
 
 # Certificados locais (autoassinados)
-backend/certs/*.key
-backend/certs/*.crt
+backend/certs/localhost.key
+backend/certs/localhost.crt
 
 # Arquivos de log
 *.log
