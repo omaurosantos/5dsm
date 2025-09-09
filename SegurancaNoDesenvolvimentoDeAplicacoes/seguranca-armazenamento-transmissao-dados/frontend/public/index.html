@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login • Contatos Seguros</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>Entrar</h1>
+        <p class="badge">HTTPS + Criptografia híbrida (AES + RSA-OAEP)</p>
+        <div class="row">
+          <input id="username" placeholder="Usuário" autocomplete="username" />
+          <input
+            id="password"
+            type="password"
+            placeholder="Senha"
+            autocomplete="current-password"
+          />
+        </div>
+        <div class="row" style="margin-top: 10px">
+          <button id="btnLogin">Entrar</button>
+          <a href="./register.html"
+            ><button type="button" class="secondary">Criar conta</button></a
+          >
+        </div>
+        <div id="msg"></div>
+      </div>
+    </div>
+    <script type="module" src="./js/auth.js"></script>
+  </body>
+</html>

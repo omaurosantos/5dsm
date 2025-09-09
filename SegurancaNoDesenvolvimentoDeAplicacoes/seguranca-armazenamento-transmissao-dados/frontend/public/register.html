@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Registrar • Contatos Seguros</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>Criar conta</h1>
+        <div class="row">
+          <input id="username" placeholder="Usuário" autocomplete="username" />
+          <input
+            id="password"
+            type="password"
+            placeholder="Senha"
+            autocomplete="new-password"
+          />
+        </div>
+        <div class="row" style="margin-top: 10px">
+          <button id="btnRegister">Registrar</button>
+          <a href="./index.html"
+            ><button type="button" class="secondary">Já tenho conta</button></a
+          >
+        </div>
+        <div id="msg"></div>
+      </div>
+    </div>
+    <script type="module" src="./js/auth.js"></script>
+  </body>
+</html>
