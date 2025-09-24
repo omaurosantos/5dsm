@@ -1,38 +1,21 @@
-
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { RequestHandler } from 'express';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-type User = { id: number; username: string; passwordHash: string; name?: string };
-
-function loadUsers(): User[] {
-  const file = path.resolve(__dirname, '../data/users.json');
-  if (!fs.existsSync(file)) return [];
-  return JSON.parse(fs.readFileSync(file, 'utf-8')) as User[];
-}
-
-const users = loadUsers();
-const findUser = (username: string) => users.find(u => u.username === username);
+import { prisma } from './db.js';
 
 export function initAuth() {
   const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
 
   passport.use(new LocalStrategy(async (username, password, done) => {
     try {
-      const user = findUser(username);
+      const user = await prisma.user.findUnique({ where: { username } });
       if (!user) return done(null, false, { message: 'Usuário não encontrado' });
       const ok = await bcrypt.compare(password, user.passwordHash);
       if (!ok) return done(null, false, { message: 'Senha inválida' });
-      return done(null, { id: user.id, username: user.username, name: user.name });
+      return done(null, { id: user.id, username: user.username, name: user.name ?? undefined, role: user.role });
     } catch (err) {
       return done(err);
     }
@@ -41,21 +24,36 @@ export function initAuth() {
   passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: JWT_SECRET,
-  }, (payload: any, done) => {
-    const user = users.find(u => u.id === payload.sub);
-    if (!user) return done(null, false);
-    return done(null, { id: user.id, username: user.username, name: user.name });
+  }, async (payload: any, done) => {
+    try {
+      const user = await prisma.user.findUnique({ where: { id: payload.sub } });
+      if (!user) return done(null, false);
+      return done(null, { id: user.id, username: user.username, name: user.name ?? undefined, role: user.role });
+    } catch (err) {
+      return done(err as any, false);
+    }
   }));
 }
 
-export function issueToken(user: { id: number; username: string; name?: string }) {
+export function issueToken(user: { id: number; username: string; name?: string; role: string }) {
   const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
   return jwt.sign(
-    { sub: user.id, username: user.username, name: user.name },
+    { sub: user.id, username: user.username, name: user.name, role: user.role },
     JWT_SECRET,
     { expiresIn: '2h' }
   );
 }
 
 export const requireAuth: RequestHandler = passport.authenticate('jwt', { session: false });
+
+export function requireRole(roles: string[]) : RequestHandler {
+  return (req, res, next) => {
+    const u: any = (req as any).user;
+    if (!u || !roles.includes(u.role)) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+    next();
+  };
+}
+
 export const usePassport: RequestHandler = passport.initialize();

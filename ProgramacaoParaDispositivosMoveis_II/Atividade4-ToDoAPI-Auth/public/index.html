@@ -1,161 +1,91 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>To-Do • Landing Page</title>
-    <!-- Bootstrap (CDN) para grid, utilitários e .img-fluid -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    >
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <!-- Header Fixo -->
-    <header id="topo" class="fixed-top bg-white border-bottom shadow-sm">
-      <nav class="container navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand fw-bold" href="#hero">To-Do API</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Alternar navegação"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+<head>
+  <meta charset="utf-8" />
+  <title>ToDo API + LP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#features">Recursos</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tasks">Tarefas</a></li>
-            <li class="nav-item"><a class="nav-link" href="#cta">Começar</a></li>
-          </ul>
-          <div class="ms-lg-3 d-flex gap-2 align-items-center">
-            <span class="small text-muted">Modo:</span>
-            <button id="toggleMode" class="btn btn-outline-primary btn-sm" aria-pressed="false">
-              Mobile-first
-            </button>
-          </div>
-        </div>
-      </nav>
-    </header>
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    /* estilos mínimos pro login */
+    .auth-bar {
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      background: #f7f7f7; padding: 10px 12px; border-radius: 8px; margin-bottom: 16px;
+    }
+    .auth-bar input {
+      padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px;
+    }
+    .auth-bar button {
+      padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;
+      background: #4A90E2; color: #fff;
+    }
+    .auth-info { font-size: 0.95rem; color: #333; }
+    .auth-error { color: #c0392b; font-size: 0.9rem; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-badge">TD</div>
+      <span>ToDo</span>
+    </div>
+  </div>
+</header>
 
-    <main>
-      <!-- Hero fullscreen 100vh -->
-      <section id="hero" class="hero-section d-flex align-items-center">
-        <div class="container">
-          <div class="row align-items-center g-4">
-            <div class="col-12 col-lg-6">
-              <h1 class="display-5 fw-bold">
-                Construa sua <span class="brand">lista de tarefas</span>
-              </h1>
-              <p class="lead">
-                Uma API simples para treinar rotas REST e uma landing responsiva para praticar layout.
-              </p>
-              <div class="d-flex gap-2 flex-wrap">
-                <a href="#tasks" class="btn btn-primary btn-lg">Ver tarefas</a>
-                <a href="http://localhost:3000/docs" class="btn btn-outline-secondary btn-lg" target="_blank" rel="noopener">
-                  Swagger
-                </a>
-              </div>
-            </div>
-            <div class="col-12 col-lg-6 text-center">
-              <img
-                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1400&auto=format&fit=crop"
-                alt="Checklist"
-                class="img-fluid rounded-4 shadow-hero"
-                loading="lazy"
-              >
-            </div>
-          </div>
-        </div>
-      </section>
+<main class="container">
+  <!-- Auth -->
+  <section class="section">
+    <div id="authSection" class="auth-bar">
+      <div id="authLoggedOut">
+        <input id="authUsername" type="text" placeholder="Usuário" autocomplete="username" />
+        <input id="authPassword" type="password" placeholder="Senha" autocomplete="current-password" />
+        <button id="btnLogin" class="btn btn-primary">Entrar</button>
+        <span id="authError" class="auth-error hidden"></span>
+      </div>
 
-      <!-- 3 colunas (empilháveis no mobile) -->
-      <section id="features" class="py-5">
-        <div class="container">
-          <div class="text-center mb-4">
-            <h2 class="section-title">Recursos</h2>
-            <p class="muted">
-              Layout com 3 colunas, mobile-first, imagem responsiva e tipografia escalável com
-              <code>rem</code> e <code>vw</code>.
-            </p>
-          </div>
-          <div class="row g-4 columns">
-            <div class="col-12 col-md-4">
-              <div class="card h-100 feature">
-                <div class="card-body">
-                  <h3 class="card-title">CRUD</h3>
-                  <p class="card-text">Crie, liste, atualize e exclua tarefas via API REST.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-4">
-              <div class="card h-100 feature">
-                <div class="card-body">
-                  <h3 class="card-title">Responsivo</h3>
-                  <p class="card-text">Header fixo, grid fluido e imagem <code>img-fluid</code>.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-4">
-              <div class="card h-100 feature">
-                <div class="card-body">
-                  <h3 class="card-title">Acessível</h3>
-                  <p class="card-text">Tipografia com <code>rem</code> e tamanhos que escalam com <code>vw</code>.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div id="authLoggedIn" class="hidden" style="grid-column: 1 / -1;">
+        <span class="auth-info">Logado como: <strong id="authUserLabel"></strong></span>
+        <button id="btnLogout" class="btn btn-muted">Sair</button>
+      </div>
+    </div>
+  </section>
 
-      <!-- Seção que consome a API -->
-      <section id="tasks" class="py-5 bg-light">
-        <div class="container">
-          <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
-            <h2 class="section-title m-0">Tarefas (da API)</h2>
-            <form id="newTaskForm" class="d-flex gap-2">
-              <label for="titleInput" class="visually-hidden">Nova tarefa</label>
-              <input id="titleInput" class="form-control" placeholder="Nova tarefa..." required />
-              <button class="btn btn-success" type="submit">Adicionar</button>
-            </form>
-          </div>
+  <!-- Criar -->
+  <section class="section">
+    <div class="card">
+      <h2 class="section-title">Criar tarefa</h2>
+      <form id="taskForm" style="display:grid; grid-template-columns: 1fr 1fr auto; gap:10px; align-items:center;">
+        <input id="titleInput" type="text" placeholder="Título" required />
+        <input id="descInput" type="text" placeholder="Descrição (opcional)" />
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+        <span id="taskError" class="auth-error hidden" style="grid-column: 1 / -1;"></span>
+      </form>
+    </div>
+  </section>
 
-          <div id="taskList" class="list-group shadow-sm" aria-live="polite">
-            <!-- Render via JS -->
-          </div>
-        </div>
-      </section>
+  <!-- Lista -->
+  <section class="section">
+    <div class="card">
+      <h2 class="section-title">Lista de tarefas</h2>
 
-      <!-- CTA fullscreen -->
-      <section id="cta" class="cta-section d-flex align-items-center">
-        <div class="container text-center">
-          <h2 class="mb-3">Pronto para praticar?</h2>
-          <p class="mb-4">Edite este projeto e experimente Mobile-first vs Desktop-first.</p>
-          <a href="#hero" class="btn btn-primary btn-lg">Voltar ao topo</a>
-        </div>
-      </section>
-    </main>
+      <div class="search-row">
+        <input id="searchInput" type="text" placeholder="texto..." />
+        <button id="btnSearch" class="btn">Pesquisar</button>
+        <button id="btnClear" class="btn">Limpar</button>
+      </div>
 
-    <footer class="py-4 border-top text-center bg-white">
-      <small>
-        &copy; <span id="year"></span> To-Do API Demo •
-        <a href="http://localhost:3000/api/tasks" target="_blank" rel="noopener">/api/tasks</a>
-      </small>
-    </footer>
+      <ul id="taskList"></ul>
+    </div>
+  </section>
+</main>
 
-    <script type="module" src="./js/app.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+<footer>
+  <div class="container">
+    <small>feito com ❤️ — Express + Prisma + JWT</small>
+  </div>
+</footer>
+  <script src="./js/app.js" type="module"></script>
+</body>
 </html>

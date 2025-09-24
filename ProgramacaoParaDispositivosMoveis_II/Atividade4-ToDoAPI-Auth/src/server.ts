@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import routes from './routes.js';
 import { loadOpenApi } from './swagger.js';
+import 'dotenv/config';
 
 
 import path from 'path';

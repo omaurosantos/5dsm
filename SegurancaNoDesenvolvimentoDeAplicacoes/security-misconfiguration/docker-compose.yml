@@ -1,0 +1,53 @@
+services:
+  postgres-app:
+    image: postgres:17-alpine
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bdaula
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_postgres_data:/var/lib/postgresql/data
+      - ./db/comandos.sql:/docker-entrypoint-initdb.d/comandos.sql
+    networks:
+      - minha-network
+
+  redis-app:
+    image: redis:8-alpine
+    container_name: redis-app
+    restart: always
+    command: redis-server --requirepass 123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - minha-network
+
+  server-app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: server-app
+    restart: always
+    networks:
+      - minha-network
+    depends_on:
+      - postgres-app
+      - redis-app
+    volumes:
+      - ./server:/usr/src/app
+    command: npm run dev
+    ports:
+      - "3001:3000"
+
+volumes:
+  db_postgres_data:
+  redis_data:
+
+networks:
+  minha-network:
+    driver: bridge
