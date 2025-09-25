@@ -14,8 +14,9 @@ enum Role {
 }
 
 enum TaskStatus {
-  pending
-  done
+  TO_DO
+  IN_PROGRESS
+  DONE
 }
 
 model User {
@@ -33,7 +34,7 @@ model Task {
   id          Int        @id @default(autoincrement())
   title       String
   description String?
-  status      TaskStatus @default(pending)
+  status      TaskStatus @default(TO_DO)
   owner       User?      @relation(fields: [ownerId], references: [id])
   ownerId     Int?
   createdAt   DateTime   @default(now())

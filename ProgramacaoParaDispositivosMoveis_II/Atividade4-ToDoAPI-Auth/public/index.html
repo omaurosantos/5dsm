@@ -4,88 +4,114 @@
   <meta charset="utf-8" />
   <title>ToDo API + LP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <link rel="stylesheet" href="./styles.css" />
-  <style>
-    /* estilos mínimos pro login */
-    .auth-bar {
-      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-      background: #f7f7f7; padding: 10px 12px; border-radius: 8px; margin-bottom: 16px;
-    }
-    .auth-bar input {
-      padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px;
-    }
-    .auth-bar button {
-      padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;
-      background: #4A90E2; color: #fff;
-    }
-    .auth-info { font-size: 0.95rem; color: #333; }
-    .auth-error { color: #c0392b; font-size: 0.9rem; }
-    .hidden { display: none; }
-  </style>
 </head>
 <body>
   <header class="site-header">
-  <div class="container header-inner">
-    <div class="brand">
-      <div class="brand-badge">TD</div>
-      <span>ToDo</span>
-    </div>
-  </div>
-</header>
-
-<main class="container">
-  <!-- Auth -->
-  <section class="section">
-    <div id="authSection" class="auth-bar">
-      <div id="authLoggedOut">
-        <input id="authUsername" type="text" placeholder="Usuário" autocomplete="username" />
-        <input id="authPassword" type="password" placeholder="Senha" autocomplete="current-password" />
-        <button id="btnLogin" class="btn btn-primary">Entrar</button>
-        <span id="authError" class="auth-error hidden"></span>
-      </div>
-
-      <div id="authLoggedIn" class="hidden" style="grid-column: 1 / -1;">
-        <span class="auth-info">Logado como: <strong id="authUserLabel"></strong></span>
-        <button id="btnLogout" class="btn btn-muted">Sair</button>
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-badge">TD</div>
+        <span>ToDo</span>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- Criar -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title">Criar tarefa</h2>
-      <form id="taskForm" style="display:grid; grid-template-columns: 1fr 1fr auto; gap:10px; align-items:center;">
-        <input id="titleInput" type="text" placeholder="Título" required />
-        <input id="descInput" type="text" placeholder="Descrição (opcional)" />
-        <button type="submit" class="btn btn-primary">Adicionar</button>
-        <span id="taskError" class="auth-error hidden" style="grid-column: 1 / -1;"></span>
-      </form>
-    </div>
-  </section>
+  <main class="container">
+    <!-- Auth -->
+    <section class="section">
+      <div id="authSection" class="auth-bar">
+        <div id="authLoggedOut">
+          <input id="authUsername" type="text" placeholder="Usuário" autocomplete="username" />
+          <input id="authPassword" type="password" placeholder="Senha" autocomplete="current-password" />
+          <button id="btnLogin" class="btn btn-primary">Entrar</button>
+          <span id="authError" class="auth-error hidden"></span>
+        </div>
 
-  <!-- Lista -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title">Lista de tarefas</h2>
-
-      <div class="search-row">
-        <input id="searchInput" type="text" placeholder="texto..." />
-        <button id="btnSearch" class="btn">Pesquisar</button>
-        <button id="btnClear" class="btn">Limpar</button>
+        <div id="authLoggedIn" class="hidden" style="grid-column: 1 / -1;">
+          <span class="auth-info">Logado como: <strong id="authUserLabel"></strong></span>
+          <button id="btnLogout" class="btn btn-muted">Sair</button>
+        </div>
       </div>
+    </section>
 
-      <ul id="taskList"></ul>
+    <!-- Criar tarefa -->
+    <section class="section">
+      <div class="card">
+        <h2 class="section-title">Criar tarefa</h2>
+        <form id="taskForm" style="display:grid; grid-template-columns: 1fr 1fr auto; gap:10px; align-items:center;">
+          <input id="titleInput" type="text" placeholder="Título" required />
+          <input id="descInput" type="text" placeholder="Descrição (opcional)" />
+          <button type="submit" class="btn btn-primary">Adicionar</button>
+          <span id="taskError" class="auth-error hidden" style="grid-column: 1 / -1;"></span>
+        </form>
+      </div>
+    </section>
+
+    <!-- Lista de tarefas -->
+    <section class="section">
+      <div class="card">
+        <h2 class="section-title">Lista de tarefas</h2>
+
+        <div class="search-row">
+          <input id="searchInput" type="text" placeholder="texto..." />
+          <button id="btnSearch" class="btn">Pesquisar</button>
+          <button id="btnClear" class="btn">Limpar</button>
+        </div>
+
+        <ul id="taskList"></ul>
+      </div>
+    </section>
+
+    <!-- Admin: criar usuário (só ADMIN vê) -->
+    <section class="section">
+      <div class="card" id="adminCreateUserCard" style="display:none;">
+        <h2 class="section-title">Criar usuário (ADMIN)</h2>
+        <form id="userForm" style="display:grid; grid-template-columns: 1fr 1fr 1fr 160px; gap:10px; align-items:center;">
+          <input id="userUsername" type="text" placeholder="Usuário" autocomplete="off" />
+          <input id="userName" type="text" placeholder="Nome (opcional)" autocomplete="off" />
+          <input id="userPassword" type="password" placeholder="Senha (min 6)" autocomplete="new-password" />
+          <select id="userRole">
+            <option value="VIEWER">VIEWER</option>
+            <option value="MANAGER">MANAGER</option>
+            <option value="ADMIN">ADMIN</option>
+          </select>
+          <button type="submit" class="btn btn-primary" style="grid-column: 1 / -1; width: fit-content;">Criar usuário</button>
+          <span id="userMsg" class="auth-error hidden" style="grid-column: 1 / -1;"></span>
+        </form>
+      </div>
+    </section>
+
+    <!-- Admin: usuários cadastrados (listar/editar/excluir) -->
+    <section class="section">
+      <div class="card" id="adminUsersCard" style="display:none;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
+          <h2 class="section-title" style="margin:0;">Usuários cadastrados</h2>
+          <button id="usersRefresh" class="btn">Atualizar</button>
+        </div>
+        <div style="overflow:auto;">
+          <table style="width:100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align:left; border-bottom:1px solid #eee;">
+                <th style="padding:8px;">ID</th>
+                <th style="padding:8px;">Usuário</th>
+                <th style="padding:8px;">Nome</th>
+                <th style="padding:8px;">Cargo</th>
+                <th style="padding:8px;">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="usersTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>feito com ❤️ — Express + Prisma + JWT</small>
     </div>
-  </section>
-</main>
+  </footer>
 
-<footer>
-  <div class="container">
-    <small>feito com ❤️ — Express + Prisma + JWT</small>
-  </div>
-</footer>
   <script src="./js/app.js" type="module"></script>
 </body>
 </html>

@@ -1,22 +1,16 @@
 /* ------------------ Theme ------------------ */
 :root {
   --space: 1rem;
-
-  /* Paleta */
-  --brand: #6f42c1;          /* roxo (sua cor já usada) */
+  --brand: #6f42c1;
   --brand-2: #8d6be0;
   --brand-3: #efe9ff;
-
-  --bg: #f7f7ff;             /* fundo macio */
+  --bg: #f7f7ff;
   --card: #ffffff;
   --text: #1e1e2d;
   --muted: #7A7F8C;
-
   --success: #28a745;
   --danger: #dc3545;
   --warning: #ffc107;
-
-  /* Efeitos */
   --radius: 14px;
   --radius-sm: 10px;
   --shadow-sm: 0 4px 12px rgba(16,24,40,.06);
@@ -67,29 +61,22 @@ header.site-header {
 }
 
 /* Sections */
-.section {
-  margin: 26px 0;
-}
+.section { margin: 26px 0; }
 .card {
   background: var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   padding: 18px;
 }
-.section-title {
-  margin: 0 0 12px; font-size: clamp(1.25rem, .9rem + .9vw, 1.6rem);
-}
+.section-title { margin: 0 0 12px; font-size: clamp(1.25rem, .9rem + .9vw, 1.6rem); }
 
 /* ------------------ Auth bar ------------------ */
 .auth-bar {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
-  gap: 10px;
-  align-items: center;
-  padding: 12px;
-  border-radius: var(--radius);
-  background: #fff;
-  box-shadow: var(--shadow-sm);
+  gap: 10px; align-items: center;
+  padding: 12px; border-radius: var(--radius);
+  background: #fff; box-shadow: var(--shadow-sm);
   margin-bottom: 16px;
 }
 .auth-error { color: var(--danger); font-size: .92rem; }
@@ -97,7 +84,7 @@ header.site-header {
 .hidden { display: none !important; }
 
 /* ------------------ Form / Inputs ------------------ */
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], select {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #e3e6ef;
@@ -107,7 +94,7 @@ input[type="text"], input[type="password"] {
   transition: box-shadow .15s ease, border-color .15s ease;
 }
 input[type="text"]::placeholder, input[type="password"]::placeholder { color: #a0a7b5; }
-input:focus {
+input:focus, select:focus {
   border-color: var(--brand-2);
   box-shadow: 0 0 0 4px rgba(141,107,224,.16);
 }
@@ -116,8 +103,7 @@ input:focus {
 .search-row {
   display: grid;
   grid-template-columns: 1fr auto auto;
-  gap: 10px;
-  align-items: center;
+  gap: 10px; align-items: center;
   margin-bottom: 10px;
 }
 
@@ -134,48 +120,41 @@ input:focus {
 }
 .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
 .btn:active { transform: translateY(0); }
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
-  color: #fff; border: none;
-}
+.btn-primary { background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%); color: #fff; border: none; }
 .btn-muted { background: #7A7F8C; color: #fff; border: none; }
 .btn-danger { background: #dc3545; color: #fff; border: none; }
 
 /* ------------------ Task list ------------------ */
 #taskList { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .task-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
-  align-items: center;
-  background: #fff;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
+  display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+  background: #fff; padding: 12px 14px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
 }
 .task-title { color: #2a2a35; }
 .task-meta em { color: var(--muted); }
 .status-pill {
-  display: inline-block;
-  font-size: .75rem;
-  background: #eef0fb;
-  color: #344;
-  padding: 4px 8px;
-  border-radius: 999px;
-  border: 1px solid #e3e6ef;
-  margin-left: 4px;
+  display: inline-block; font-size: .75rem; background: #eef0fb; color: #344;
+  padding: 4px 8px; border-radius: 999px; border: 1px solid #e3e6ef; margin-left: 4px;
 }
 
 /* ------------------ Footer ------------------ */
-footer {
-  margin-top: 36px;
-  padding: 24px 0;
-  color: var(--muted);
-}
+footer { margin-top: 36px; padding: 24px 0; color: var(--muted); }
 
 /* ------------------ Responsive ------------------ */
 @media (max-width: 720px) {
   .auth-bar { grid-template-columns: 1fr; }
   .search-row { grid-template-columns: 1fr; }
+}
+
+/* ---- Select de status ---- */
+.task-status {
+  padding: 8px 10px;
+  border: 1px solid #e3e6ef;
+  border-radius: 10px;
+  background: #fff;
+}
+.task-status:focus {
+  border-color: var(--brand-2);
+  box-shadow: 0 0 0 4px rgba(141,107,224,.16);
+  outline: none;
 }
