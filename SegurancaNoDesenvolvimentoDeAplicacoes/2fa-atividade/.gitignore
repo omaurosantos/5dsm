@@ -10,6 +10,7 @@ pnpm-debug.log*
 # Dependency folders
 node_modules/
 **/node_modules/
+.env
 
 # Build artifacts
 dist/
