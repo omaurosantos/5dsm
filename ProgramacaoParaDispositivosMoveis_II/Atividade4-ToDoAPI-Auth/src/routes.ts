@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { prisma } from './db.js';
 import { createTaskSchema, updateTaskSchema } from './validation.js';
 import { requireAuth } from './auth.js';
+import { TaskRepositoryFactory } from './adapters/TaskRepositoryAdapter.js';
+import { TaskProcessor, TaskStrategyFactory } from './strategies/TaskProcessingStrategy.js';
 
 const router = Router();
 
@@ -72,12 +73,9 @@ const router = Router();
 
 router.get('/tasks', async (_req, res, next) => {
   try {
-    const tasks = await prisma.task.findMany({
-      orderBy: { id: 'asc' },
-      include: {
-        owner: { select: { username: true, role: true } }
-      }
-    });
+    // Usando Adapter Pattern para abstrair acesso aos dados
+    const repository = TaskRepositoryFactory.getRepository();
+    const tasks = await repository.findAll();
     res.json(tasks);
   } catch (err) {
     next(err);
@@ -87,12 +85,9 @@ router.get('/tasks', async (_req, res, next) => {
 router.get('/tasks/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id);
-    const task = await prisma.task.findUnique({
-      where: { id },
-      include: {
-        owner: { select: { username: true, role: true } }
-      }
-    });
+    // Usando Adapter Pattern para abstrair acesso aos dados
+    const repository = TaskRepositoryFactory.getRepository();
+    const task = await repository.findById(id);
     if (!task) return res.status(404).json({ message: 'Not found' });
     res.json(task);
   } catch (err) {
@@ -102,14 +97,37 @@ router.get('/tasks/:id', async (req, res, next) => {
 
 router.post('/tasks', requireAuth, async (req, res, next) => {
   try {
+    // Validação com Zod (validação de schema)
     const parsed = createTaskSchema.safeParse(req.body);
     if (!parsed.success) {
       return res.status(400).json({ message: 'Validation error', issues: parsed.error.flatten() });
     }
+
     const u = req.user as any; // vem do JWT
-    const created = await prisma.task.create({
-      data: { ...parsed.data, ownerId: u?.id }
-    });
+    
+    // Strategy Pattern - Seleciona estratégia baseada no role do usuário
+    const strategy = TaskStrategyFactory.createStrategy(u?.role);
+    const processor = new TaskProcessor(strategy);
+    
+    // Processa os dados usando a estratégia
+    const taskData = {
+      title: parsed.data.title,
+      description: parsed.data.description,
+      status: parsed.data.status,
+      ownerId: u?.id
+    };
+    
+    const processedData = processor.process(taskData);
+    
+    // Validação adicional com Strategy
+    const validation = processor.validate(processedData);
+    if (!validation.valid) {
+      return res.status(400).json({ message: validation.error });
+    }
+
+    // Usando Adapter Pattern para criar a tarefa
+    const repository = TaskRepositoryFactory.getRepository();
+    const created = await repository.create(processedData);
     res.status(201).json(created);
   } catch (err) {
     next(err);
@@ -123,15 +141,36 @@ router.put('/tasks/:id', requireAuth, async (req, res, next) => {
     if (!parsed.success) {
       return res.status(400).json({ message: 'Validation error', issues: parsed.error.flatten() });
     }
-    const updated = await prisma.task.update({
-      where: { id },
-      data: parsed.data,
-    });
-    res.json(updated);
-  } catch (err) {
-    if ((err as any).code === 'P2025') {
+
+    const u = req.user as any;
+    
+    // Strategy Pattern - Processa dados de atualização
+    const strategy = TaskStrategyFactory.createStrategy(u?.role);
+    const processor = new TaskProcessor(strategy);
+    
+    const taskData = {
+      title: parsed.data.title || '',
+      description: parsed.data.description,
+      status: parsed.data.status
+    };
+    
+    const processedData = processor.process(taskData);
+    
+    // Remove campos vazios para atualização parcial
+    const updateData: any = {};
+    if (processedData.title) updateData.title = processedData.title;
+    if (processedData.description !== undefined) updateData.description = processedData.description;
+    if (processedData.status) updateData.status = processedData.status;
+
+    // Usando Adapter Pattern para atualizar
+    const repository = TaskRepositoryFactory.getRepository();
+    const updated = await repository.update(id, updateData);
+    
+    if (!updated) {
       return res.status(404).json({ message: 'Not found' });
     }
+    res.json(updated);
+  } catch (err) {
     next(err);
   }
 });
@@ -139,12 +178,15 @@ router.put('/tasks/:id', requireAuth, async (req, res, next) => {
 router.delete('/tasks/:id', requireAuth, async (req, res, next) => {
   try {
     const id = Number(req.params.id);
-    await prisma.task.delete({ where: { id } });
-    res.status(204).send();
-  } catch (err) {
-    if ((err as any).code === 'P2025') {
+    // Usando Adapter Pattern para deletar
+    const repository = TaskRepositoryFactory.getRepository();
+    const deleted = await repository.delete(id);
+    
+    if (!deleted) {
       return res.status(404).json({ message: 'Not found' });
     }
+    res.status(204).send();
+  } catch (err) {
     next(err);
   }
 });
